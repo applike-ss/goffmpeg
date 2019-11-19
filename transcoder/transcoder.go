@@ -13,9 +13,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/xfrr/goffmpeg/ffmpeg"
-	"github.com/xfrr/goffmpeg/models"
-	"github.com/xfrr/goffmpeg/utils"
+	"github.com/applike-ss/goffmpeg/ffmpeg"
+	"github.com/applike-ss/goffmpeg/models"
+	"github.com/applike-ss/goffmpeg/utils"
 )
 
 // Transcoder Main struct

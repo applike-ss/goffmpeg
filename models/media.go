@@ -48,6 +48,7 @@ type Mediafile struct {
 	copyTs                bool
 	nativeFramerateInput  bool
 	inputInitialOffset    string
+	videoQscale           int
 	rtmpLive              string
 	hlsPlaylistType       string
 	hlsListSize           int
@@ -250,6 +251,10 @@ func (m *Mediafile) SetHttpKeepAlive(val bool) {
 
 func (m *Mediafile) SetInputInitialOffset(val string) {
 	m.inputInitialOffset = val
+}
+
+func (m *Mediafile) SetVideoQscale(val int) {
+	m.videoQscale = val
 }
 
 func (m *Mediafile) SetStreamIds(val map[int]string) {
@@ -475,6 +480,10 @@ func (m *Mediafile) SkipAudio() bool {
 	return m.skipAudio
 }
 
+func (m *Mediafile) VideoQscale() int {
+	return m.videoQscale
+}
+
 func (m *Mediafile) Metadata() Metadata {
 	return m.metadata
 }
@@ -532,6 +541,7 @@ func (m *Mediafile) ToStrCommand() []string {
 		"VideoFilter",
 		"HttpMethod",
 		"HttpKeepAlive",
+		"VideoQscale",
 		"OutputPath",
 	}
 	for _, name := range opts {
@@ -824,6 +834,14 @@ func (m *Mediafile) ObtainSeekUsingTsInput() []string {
 func (m *Mediafile) ObtainRtmpLive() []string {
 	if m.rtmpLive != "" {
 		return []string{"-rtmp_live", m.rtmpLive}
+	} else {
+		return nil
+	}
+}
+
+func (m *Mediafile) ObtainVideoQscale() []string {
+	if m.videoQscale > 0 {
+		return []string{"-qscale:v", fmt.Sprintf("%d", m.videoQscale)}
 	} else {
 		return nil
 	}
